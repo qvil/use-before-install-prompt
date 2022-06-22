@@ -33,10 +33,10 @@ const App = () => {
 
 ## Return value
 
-| value           | Type                                                 | Description                 |
-| --------------- | ---------------------------------------------------- | --------------------------- |
-| deferredPrompt  | MutableRefObject<BeforeInstallPromptEvent,undefined> | deferredPrompt Ref          |
-| addToHomeScreen | Function                                             | Add to home screen function |
+| value           | Type                                                  | Description                 |
+| --------------- | ----------------------------------------------------- | --------------------------- |
+| deferredPrompt  | MutableRefObject<BeforeInstallPromptEvent\|undefined> | deferredPrompt Ref          |
+| addToHomeScreen | Function                                              | Add to home screen function |
 
 ## Browser compatibility
 
