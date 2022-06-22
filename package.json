@@ -1,0 +1,72 @@
+{
+  "name": "use-before-install-prompt",
+  "repository": "https://github.com/qvil/use-before-install-prompt.git",
+  "author": "Taesu Hyeon <email@qvil.dev>",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "peerDependencies": {
+    "react": ">=16"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "module": "dist/lib.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/lib.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/lib.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^7.0.8",
+    "@types/react": "^18.0.14",
+    "husky": "^8.0.1",
+    "react": "^18.2.0",
+    "size-limit": "^7.0.8",
+    "tsdx": "^0.14.1",
+    "typescript": "^4.7.4"
+  },
+  "keywords": [
+    "react",
+    "hook",
+    "lib",
+    "ts",
+    "typescript",
+    "use-before-install-prompt",
+    "use before install prompt",
+    "use-deferred-prompt",
+    "use deferred prompt",
+    "use-before-install-prompt hook",
+    "use deferred prompt hook"
+  ]
+}
