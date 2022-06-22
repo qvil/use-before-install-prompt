@@ -1,5 +1,3 @@
-import { MutableRefObject } from 'react';
-
 export interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
   readonly userChoice: Promise<{
@@ -12,12 +10,12 @@ export interface BeforeInstallPromptEvent extends Event {
 export interface Options {
   acceptedFn?: () => void;
   dismissedFn?: () => void;
-  afterInstallPromptFn?: () => void;
+  installedFn?: () => void;
 }
 
 export interface ReturnType {
-  deferredPrompt?: MutableRefObject<BeforeInstallPromptEvent | undefined>;
-  addToHomeScreen?: () => Promise<false | void>;
+  isInstalled: boolean;
+  addToHomeScreen: () => Promise<false | void>;
 }
 
 declare global {

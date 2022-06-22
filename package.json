@@ -2,7 +2,7 @@
   "name": "use-before-install-prompt",
   "repository": "https://github.com/qvil/use-before-install-prompt.git",
   "author": "Taesu Hyeon <email@qvil.dev>",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { BeforeInstallPromptEvent, Options, ReturnType } from './types';
 
@@ -6,8 +6,9 @@ const useBeforeInstallPrompt = (options?: Options): ReturnType => {
   const {
     acceptedFn = () => console.log('User accepted the A2HS prompt'),
     dismissedFn = () => console.log('User dismissed the A2HS prompt'),
-    afterInstallPromptFn = () => console.log('Not deferred prompt'),
+    installedFn = () => console.log('Already installed'),
   } = { ...options };
+  const [isInstalled, setIsInstalled] = useState(false);
   let beforeInstallPromptEvent = useRef<BeforeInstallPromptEvent>();
 
   const addToHomeScreen = async () => {
@@ -33,15 +34,18 @@ const useBeforeInstallPrompt = (options?: Options): ReturnType => {
     window.addEventListener('beforeinstallprompt', handler);
 
     if (!beforeInstallPromptEvent.current) {
-      afterInstallPromptFn?.();
+      setIsInstalled(true);
+      installedFn?.();
+    } else {
+      setIsInstalled(false);
     }
 
     return () => {
       window.removeEventListener('beforeinstallprompt', handler);
     };
-  }, [afterInstallPromptFn]);
+  }, [installedFn]);
 
-  return { deferredPrompt: beforeInstallPromptEvent, addToHomeScreen };
+  return { isInstalled, addToHomeScreen };
 };
 
 export default useBeforeInstallPrompt;
