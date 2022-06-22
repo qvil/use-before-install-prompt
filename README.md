@@ -25,11 +25,11 @@ const App = () => {
 
 ## Options
 
-| options              | Type     | Description                                                              | Required | Default Value |
-| -------------------- | -------- | ------------------------------------------------------------------------ | -------- | ------------- |
-| acceptedFn           | Function | API URL                                                                  | no       | console.log() |
-| dismissedFn          | Function | Fetch trigger, If you want to not fetch automatically set value to false | no       | console.log() |
-| afterInstallPromptFn | Function | Fetch trigger, If you want to not fetch automatically set value to false | no       | console.log() |
+| options              | Type     | Description                                  | Required | Default Value |
+| -------------------- | -------- | -------------------------------------------- | -------- | ------------- |
+| acceptedFn           | Function | Callback function to execute when accepted   | no       | console.log() |
+| dismissedFn          | Function | Callback function to execute when dismissed  | no       | console.log() |
+| afterInstallPromptFn | Function | Callback function to execute after installed | no       | console.log() |
 
 ## Return value
 

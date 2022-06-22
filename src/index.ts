@@ -8,14 +8,14 @@ const useBeforeInstallPrompt = (options?: Options): ReturnType => {
     dismissedFn = () => console.log('User dismissed the A2HS prompt'),
     afterInstallPromptFn = () => console.log('Not deferred prompt'),
   } = { ...options };
-  let deferredPrompt = useRef<BeforeInstallPromptEvent>();
+  let beforeInstallPromptEvent = useRef<BeforeInstallPromptEvent>();
 
   const addToHomeScreen = async () => {
-    if (!deferredPrompt.current) return false;
+    if (!beforeInstallPromptEvent.current) return false;
 
-    deferredPrompt.current.prompt();
+    beforeInstallPromptEvent.current.prompt();
 
-    const { outcome } = await deferredPrompt.current.userChoice;
+    const { outcome } = await beforeInstallPromptEvent.current.userChoice;
 
     if (outcome === 'accepted') {
       acceptedFn?.();
@@ -27,12 +27,12 @@ const useBeforeInstallPrompt = (options?: Options): ReturnType => {
   useEffect(() => {
     const handler = (e: BeforeInstallPromptEvent) => {
       e.preventDefault();
-      deferredPrompt.current = e;
+      beforeInstallPromptEvent.current = e;
     };
 
     window.addEventListener('beforeinstallprompt', handler);
 
-    if (!deferredPrompt.current) {
+    if (!beforeInstallPromptEvent.current) {
       afterInstallPromptFn?.();
     }
 
@@ -41,7 +41,7 @@ const useBeforeInstallPrompt = (options?: Options): ReturnType => {
     };
   }, [afterInstallPromptFn]);
 
-  return { deferredPrompt, addToHomeScreen };
+  return { deferredPrompt: beforeInstallPromptEvent, addToHomeScreen };
 };
 
 export default useBeforeInstallPrompt;
