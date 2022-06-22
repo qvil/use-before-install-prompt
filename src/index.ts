@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { BeforeInstallPromptEvent, Options, ReturnType } from './types';
 
@@ -8,34 +8,37 @@ const useBeforeInstallPrompt = (options?: Options): ReturnType => {
     dismissedFn = () => console.log('User dismissed the A2HS prompt'),
     installedFn = () => console.log('Already installed'),
   } = { ...options };
+  const [beforeInstallPromptEvent, setBeforeInstallPromptEvent] = useState<
+    BeforeInstallPromptEvent
+  >();
   const [isInstalled, setIsInstalled] = useState(false);
-  let beforeInstallPromptEvent = useRef<BeforeInstallPromptEvent>();
 
   const addToHomeScreen = async () => {
-    if (!beforeInstallPromptEvent.current) return false;
+    if (!beforeInstallPromptEvent) return false;
 
-    beforeInstallPromptEvent.current.prompt();
+    beforeInstallPromptEvent.prompt();
 
-    const { outcome } = await beforeInstallPromptEvent.current.userChoice;
+    const { outcome } = await beforeInstallPromptEvent.userChoice;
 
     if (outcome === 'accepted') {
-      acceptedFn?.();
+      setIsInstalled(true);
+      acceptedFn();
     } else {
-      dismissedFn?.();
+      dismissedFn();
     }
   };
 
   useEffect(() => {
     const handler = (e: BeforeInstallPromptEvent) => {
       e.preventDefault();
-      beforeInstallPromptEvent.current = e;
+      setBeforeInstallPromptEvent(e);
     };
 
     window.addEventListener('beforeinstallprompt', handler);
 
-    if (!beforeInstallPromptEvent.current) {
+    if (!beforeInstallPromptEvent) {
       setIsInstalled(true);
-      installedFn?.();
+      installedFn();
     } else {
       setIsInstalled(false);
     }
@@ -44,6 +47,20 @@ const useBeforeInstallPrompt = (options?: Options): ReturnType => {
       window.removeEventListener('beforeinstallprompt', handler);
     };
   }, [installedFn]);
+
+  useEffect(() => {
+    const handler = () => {
+      setIsInstalled(true);
+      // For apply setIsInstalled(true) when install and popup new pwa
+      window.location.reload();
+    };
+
+    window.addEventListener('appinstalled', handler);
+
+    return () => {
+      window.removeEventListener('appinstalled', handler);
+    };
+  }, []);
 
   return { isInstalled, addToHomeScreen };
 };
