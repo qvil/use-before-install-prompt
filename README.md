@@ -1,3 +1,5 @@
+# This project has been deprecated. Move to [use-pwa-install](https://www.npmjs.com/package/use-pwa-install)
+
 # use-before-install-prompt
 
 React hook for beforeinstallprompt event
